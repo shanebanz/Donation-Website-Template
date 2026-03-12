@@ -28,3 +28,9 @@ $routes->post('/admin/campaign/store','Admin::storeCampaign');
 
 $routes->get('/admin/approve/(:num)','Admin::approve/$1');
 $routes->get('/admin/reject/(:num)','Admin::reject/$1');
+
+$routes->get('/logout','Auth::logout');
+
+$routes->get('/admin/campaign/edit/(:num)','Admin::editCampaign/$1');
+$routes->post('/admin/campaign/update/(:num)','Admin::updateCampaign/$1');
+$routes->get('/admin/campaign/delete/(:num)','Admin::deleteCampaign/$1');

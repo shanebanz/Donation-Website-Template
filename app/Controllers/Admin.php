@@ -21,7 +21,23 @@ public function __construct()
 
 public function index()
 {
-return view('admin/dashboard');
+    $db = \Config\Database::connect();
+
+    $campaignBuilder = $db->table('campaigns');
+    $totalCampaigns = $campaignBuilder->countAllResults();
+
+    $donationBuilder = $db->table('donations');
+    $totalDonations = $donationBuilder->countAllResults();
+
+    $pendingBuilder = $db->table('donations');
+    $pendingBuilder->where('status','pending');
+    $pendingDonations = $pendingBuilder->countAllResults();
+
+    $data['totalCampaigns'] = $totalCampaigns;
+    $data['totalDonations'] = $totalDonations;
+    $data['pendingDonations'] = $pendingDonations;
+
+    return view('admin_dashboard',$data);
 }
 
 public function donations()
@@ -40,15 +56,14 @@ return view('admin/donations',$data);
 
 public function campaigns()
 {
+    $db = \Config\Database::connect();
 
-$db = \Config\Database::connect();
+    $builder = $db->table('campaigns');
+    $campaigns = $builder->get()->getResult();
 
-$builder = $db->table('campaigns');
+    $data['campaigns'] = $campaigns;
 
-$data['campaigns'] = $builder->get()->getResult();
-
-return view('admin/campaigns',$data);
-
+    return view('admin_campaigns', $data);
 }
 
 
@@ -88,35 +103,92 @@ return redirect()->to('/admin/campaigns');
 
 public function approve($id)
 {
+    $db = \Config\Database::connect();
 
-$db = \Config\Database::connect();
+    // get donation
+    $donation = $db->table('donations')
+                   ->where('id', $id)
+                   ->get()
+                   ->getRow();
 
-$builder = $db->table('donations');
+    if(!$donation){
+        return redirect()->to('/admin/donations');
+    }
 
-$donation = $builder->where('id',$id)->get()->getRow();
+    // update donation status
+    $db->table('donations')
+       ->where('id', $id)
+       ->update(['status' => 'approved']);
 
-$builder->where('id',$id)->update([
-'status' => 'approved'
-]);
+    // add amount to campaign total
+    $db->table('campaigns')
+       ->set('current_amount', 'current_amount + '.$donation->amount, false)
+       ->where('id', $donation->campaign_id)
+       ->update();
 
-return redirect()->to('/admin/donations');
-
+    return redirect()->to('/admin/donations');
 }
 
 public function reject($id)
 {
+    $db = \Config\Database::connect();
 
-$db = \Config\Database::connect();
+    $db->table('donations')
+       ->where('id', $id)
+       ->update(['status' => 'rejected']);
 
-$builder = $db->table('donations');
-
-$builder->where('id',$id)->update([
-'status' => 'rejected'
-]);
-
-return redirect()->to('/admin/donations');
-
+    return redirect()->to('/admin/donations');
 }
 
+public function editCampaign($id)
+{
+    $db = \Config\Database::connect();
+
+    $builder = $db->table('campaigns');
+    $campaign = $builder->where('id',$id)->get()->getRow();
+
+    $data['campaign'] = $campaign;
+
+    return view('admin_edit_campaign',$data);
+}
+
+
+public function updateCampaign($id)
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('campaigns');
+
+    $data = [
+        'title' => $this->request->getPost('title'),
+        'description' => $this->request->getPost('description'),
+        'goal_amount' => $this->request->getPost('goal_amount'),
+        'deadline' => $this->request->getPost('deadline')
+    ];
+
+    $file = $this->request->getFile('image');
+
+    if($file && $file->isValid() && !$file->hasMoved())
+    {
+        $newName = $file->getRandomName();
+        $file->move('uploads',$newName);
+        $data['image'] = $newName;
+    }
+
+    $builder->where('id',$id)->update($data);
+
+    return redirect()->to('/admin/campaigns');
+}
+
+
+public function deleteCampaign($id)
+{
+    $db = \Config\Database::connect();
+
+    $builder = $db->table('campaigns');
+
+    $builder->where('id',$id)->delete();
+
+    return redirect()->to('/admin/campaigns');
+}
 
 }

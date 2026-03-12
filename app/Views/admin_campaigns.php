@@ -1,27 +1,32 @@
-<!-- ORIGINALLY THIS FILE DOES NOT COUNT BECAUSE IN THE INSTRUCTION
- THERE IS NO ADMIN_CAMPAIGNS -->
-
- <!-- ALSO I CANNOT LOGOUT -->
-
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('content') ?>
 
-<h2 class="mb-4">Admin Campaign Manager</h2>
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+<h2>Admin Campaign Manager</h2>
+
+<a href="/sinag-donation/public/logout" class="btn btn-danger">
+Logout
+</a>
+
+</div>
 
 <a href="/sinag-donation/public/admin/campaign/create" class="btn btn-success mb-3">
 Create Campaign
 </a>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-striped">
 
-<thead>
+<thead class="table-dark">
+
 <tr>
 <th>ID</th>
 <th>Title</th>
 <th>Goal</th>
 <th>Actions</th>
 </tr>
+
 </thead>
 
 <tbody>

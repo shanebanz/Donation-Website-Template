@@ -7,11 +7,29 @@ use CodeIgniter\Controller;
 class Donation extends Controller
 {
 
-    public function index($campaign_id)
-    {
-        $data['campaign_id'] = $campaign_id;
-        return view('donate',$data);
+public function index($id)
+{
+    $db = \Config\Database::connect();
+
+    $builder = $db->table('campaigns');
+    $builder->where('id', $id);
+
+    $campaign = $builder->get()->getRow();
+
+    // calculate progress
+    $progress = 0;
+
+    if ($campaign && $campaign->goal_amount > 0) {
+        $progress = min(100, ($campaign->current_amount / $campaign->goal_amount) * 100);
     }
+
+    $data = [
+        'campaign' => $campaign,
+        'progress' => $progress
+    ];
+
+    return view('donate', $data);
+}
 
 public function save()
 {
@@ -20,23 +38,26 @@ public function save()
     $campaign_id = $this->request->getPost('campaign_id');
     $amount = $this->request->getPost('amount');
 
+    $file = $this->request->getFile('proof');
+    $proofName = null;
+
+    if ($file && $file->isValid() && !$file->hasMoved())
+    {
+        $proofName = $file->getRandomName();
+        $file->move('uploads', $proofName);
+    }
+
     $data = [
         'campaign_id' => $campaign_id,
         'donor_name' => $this->request->getPost('donor_name'),
         'amount' => $amount,
         'payment_method' => 'GCash',
         'reference_number' => $this->request->getPost('reference'),
+        'proof' => $proofName,
         'status' => 'pending'
     ];
 
-    // save donation
     $db->table('donations')->insert($data);
-
-    // update campaign total
-    $builder = $db->table('campaigns');
-    $builder->set('current_amount', "current_amount + $amount", false);
-    $builder->where('id', $campaign_id);
-    $builder->update();
 
     return redirect()->to('/campaign/'.$campaign_id);
 }
