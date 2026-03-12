@@ -1,0 +1,130 @@
+DEBUG - 2026-03-11 14:31:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:31:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:31:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:33:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:34:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:35:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:41:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:41:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:42:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:42:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:42:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:42:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:42:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:48:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:48:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:48:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:48:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 14:48:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-11 14:49:10 --> ErrorException: Undefined variable $campaign
+[Method: GET, Route: donate/2]
+in APPPATH\Views\donate.php on line 7.
+ 1 APPPATH\Views\donate.php(7): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $campaign', 'C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php', 7)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('donate', [], true)
+ 5 APPPATH\Controllers\Donation.php(13): view('donate', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Donation->index('2')
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Donation))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-11 14:49:18 --> ErrorException: Undefined variable $campaign
+[Method: GET, Route: donate/1]
+in APPPATH\Views\donate.php on line 7.
+ 1 APPPATH\Views\donate.php(7): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $campaign', 'C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php', 7)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('donate', [], true)
+ 5 APPPATH\Controllers\Donation.php(13): view('donate', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Donation->index('1')
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Donation))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-11 14:49:21 --> ErrorException: Undefined variable $campaign
+[Method: GET, Route: donate/2]
+in APPPATH\Views\donate.php on line 7.
+ 1 APPPATH\Views\donate.php(7): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $campaign', 'C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php', 7)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('donate', [], true)
+ 5 APPPATH\Controllers\Donation.php(13): view('donate', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Donation->index('2')
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Donation))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-11 14:49:30 --> ErrorException: Undefined variable $campaign
+[Method: GET, Route: donate/2]
+in APPPATH\Views\donate.php on line 7.
+ 1 APPPATH\Views\donate.php(7): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $campaign', 'C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php', 7)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('donate', [], true)
+ 5 APPPATH\Controllers\Donation.php(13): view('donate', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Donation->index('2')
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Donation))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-11 14:50:09 --> ErrorException: Undefined variable $campaign
+[Method: GET, Route: donate/2]
+in APPPATH\Views\donate.php on line 7.
+ 1 APPPATH\Views\donate.php(7): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $campaign', 'C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php', 7)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('donate', [], true)
+ 5 APPPATH\Controllers\Donation.php(13): view('donate', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Donation->index('2')
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Donation))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-11 14:50:10 --> ErrorException: Undefined variable $campaign
+[Method: GET, Route: donate/2]
+in APPPATH\Views\donate.php on line 7.
+ 1 APPPATH\Views\donate.php(7): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $campaign', 'C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php', 7)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('donate', [], true)
+ 5 APPPATH\Controllers\Donation.php(13): view('donate', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Donation->index('2')
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Donation))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-11 14:50:12 --> ErrorException: Undefined variable $campaign
+[Method: GET, Route: donate/1]
+in APPPATH\Views\donate.php on line 7.
+ 1 APPPATH\Views\donate.php(7): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $campaign', 'C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php', 7)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('donate', [], true)
+ 5 APPPATH\Controllers\Donation.php(13): view('donate', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Donation->index('1')
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Donation))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-11 14:50:34 --> ErrorException: Undefined variable $campaign
+[Method: GET, Route: donate/2]
+in APPPATH\Views\donate.php on line 7.
+ 1 APPPATH\Views\donate.php(7): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $campaign', 'C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php', 7)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp\\htdocs\\sinag-donation\\app\\Views\\donate.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('donate', [], true)
+ 5 APPPATH\Controllers\Donation.php(13): view('donate', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Donation->index('2')
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Donation))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
