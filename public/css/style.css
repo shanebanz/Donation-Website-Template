@@ -1,0 +1,118 @@
+/* GLOBAL FONT */
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background:#F4F4F4;
+    color:#121212;
+}
+
+/* HEADINGS */
+
+h1,h2,h3,h4{
+    font-family: 'Playfair Display', serif;
+}
+
+/* NAVBAR */
+
+.navbar{
+    background:#FFFFFF;
+    border-bottom:1px solid #E0E0E0;
+}
+
+.navbar-brand{
+    font-weight:600;
+}
+
+.nav-link{
+    color:#121212 !important;
+    font-weight:500;
+}
+
+.nav-link:hover{
+    color:#3A5A40 !important;
+}
+
+/* BUTTONS */
+
+.btn-primary{
+    background:#3A5A40;
+    border:none;
+}
+
+.btn-primary:hover{
+    background:#2F4A33;
+}
+
+.btn-outline-primary{
+    border:1px solid #3A5A40;
+    color:#3A5A40;
+}
+
+.btn-outline-primary:hover{
+    background:#3A5A40;
+    color:white;
+}
+
+/* CARDS */
+
+.card{
+    border:none;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* PROGRESS BAR */
+
+.progress{
+    height:12px;
+    border-radius:10px;
+    background:#E5E5E5;
+}
+
+.progress-bar{
+    background:#3A5A40;
+}
+
+/* HERO SECTION */
+
+.hero{
+    background:white;
+    padding:80px 0;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:48px;
+    margin-bottom:20px;
+}
+
+/* FOOTER */
+
+.footer{
+    background:#121212;
+    color:white;
+    padding:40px 0;
+    margin-top:60px;
+}
+
+/* SINAG Theme Buttons */
+
+.btn-primary{
+background:#5f7c2f !important;
+border:none !important;
+color:white;
+font-weight:500;
+}
+
+.btn-primary:hover{
+background:#4e6726 !important;
+}
+
+.btn-success{
+background:#5f7c2f !important;
+border:none !important;
+}
+
+.progress-bar{
+background:#5f7c2f;
+}

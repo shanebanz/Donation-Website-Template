@@ -34,3 +34,12 @@ $routes->get('/logout','Auth::logout');
 $routes->get('/admin/campaign/edit/(:num)','Admin::editCampaign/$1');
 $routes->post('/admin/campaign/update/(:num)','Admin::updateCampaign/$1');
 $routes->get('/admin/campaign/delete/(:num)','Admin::deleteCampaign/$1');
+
+// Account Verification
+$routes->get('register', 'Auth::register');
+$routes->post('register', 'Auth::registerUser');
+
+$routes->get('login', 'Auth::login');
+$routes->post('login', 'Auth::loginUser');
+
+$routes->get('verify/(:any)', 'Auth::verify/$1');
