@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Solar Lamps for Sitio Pag-asa</title>
+  <desc id="desc">Stylized illustration of a rural community with solar lamps and warm evening light.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f1b2f"/>
+      <stop offset="100%" stop-color="#2f4f6a"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3c6e4c"/>
+      <stop offset="100%" stop-color="#274535"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#ffe89a"/>
+      <stop offset="100%" stop-color="#f2b24c"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#sky)"/>
+  <circle cx="920" cy="130" r="62" fill="url(#sun)" opacity="0.95"/>
+  <rect y="430" width="1200" height="290" fill="url(#ground)"/>
+
+  <path d="M0 490 C180 430, 340 450, 520 490 C690 525, 880 520, 1200 470 L1200 720 L0 720 Z" fill="#2f5a40" opacity="0.7"/>
+
+  <rect x="180" y="360" width="170" height="120" rx="8" fill="#d9b48a"/>
+  <polygon points="160,365 265,300 370,365" fill="#8a4f2d"/>
+  <rect x="240" y="410" width="45" height="70" fill="#70452d"/>
+
+  <rect x="430" y="338" width="200" height="142" rx="8" fill="#c79f75"/>
+  <polygon points="410,345 530,270 650,345" fill="#7d4629"/>
+  <rect x="510" y="398" width="46" height="82" fill="#6a3f28"/>
+
+  <rect x="770" y="352" width="185" height="128" rx="8" fill="#d2a980"/>
+  <polygon points="750,357 862,288 975,357" fill="#845033"/>
+  <rect x="840" y="408" width="44" height="72" fill="#6b4127"/>
+
+  <rect x="610" y="292" width="85" height="14" rx="4" fill="#243a2f"/>
+  <rect x="620" y="250" width="65" height="36" rx="5" fill="#2f4f3e"/>
+  <line x1="651" y1="286" x2="651" y2="470" stroke="#283b2e" stroke-width="6"/>
+  <circle cx="651" cy="328" r="16" fill="#ffe9a3"/>
+  <circle cx="651" cy="328" r="26" fill="#ffe9a3" opacity="0.28"/>
+
+  <line x1="315" y1="320" x2="315" y2="474" stroke="#2d3f32" stroke-width="5"/>
+  <circle cx="315" cy="358" r="14" fill="#ffe7a0"/>
+  <circle cx="315" cy="358" r="24" fill="#ffe7a0" opacity="0.22"/>
+
+  <line x1="904" y1="316" x2="904" y2="472" stroke="#2d3f32" stroke-width="5"/>
+  <circle cx="904" cy="353" r="14" fill="#ffe7a0"/>
+  <circle cx="904" cy="353" r="24" fill="#ffe7a0" opacity="0.22"/>
+
+  <rect x="42" y="42" width="560" height="96" rx="16" fill="#0b0f0d" opacity="0.72"/>
+  <text x="72" y="95" fill="#ffffff" font-family="Poppins, Arial, sans-serif" font-size="42" font-weight="700">Solar Lamps for Sitio Pag-asa</text>
+</svg>

@@ -9,15 +9,13 @@ class Home extends Controller
 
 public function index()
 {
+return redirect()->to(base_url('campaigns'));
 
-$db = \Config\Database::connect();
+}
 
-$builder = $db->table('campaigns');
-
-$data['campaigns'] = $builder->get()->getResult();
-
-return view('campaigns',$data);
-
+public function howItWorks()
+{
+return view('how_it_works');
 }
 
 }

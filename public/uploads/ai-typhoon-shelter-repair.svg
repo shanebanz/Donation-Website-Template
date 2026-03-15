@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-label="Typhoon shelter repair campaign">
+  <defs>
+    <linearGradient id="storm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a2538"/>
+      <stop offset="100%" stop-color="#4f647f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#storm)"/>
+  <ellipse cx="230" cy="130" rx="120" ry="56" fill="#95a7bc" opacity="0.9"/>
+  <ellipse cx="390" cy="120" rx="140" ry="62" fill="#8ea1b7" opacity="0.9"/>
+  <ellipse cx="980" cy="140" rx="170" ry="66" fill="#9bb0c5" opacity="0.9"/>
+  <rect y="480" width="1200" height="240" fill="#3a5446"/>
+  <rect x="210" y="280" width="760" height="250" rx="14" fill="#c9b091"/>
+  <polygon points="180,300 590,150 1020,300" fill="#8a5b3f"/>
+  <polygon points="430,300 590,232 760,300" fill="#6f4733"/>
+  <rect x="545" y="370" width="90" height="160" fill="#6d4b35"/>
+  <rect x="290" y="350" width="130" height="90" fill="#8f694f"/>
+  <rect x="780" y="350" width="130" height="90" fill="#8f694f"/>
+  <line x1="150" y1="190" x2="130" y2="260" stroke="#d3dbe5" stroke-width="7"/>
+  <line x1="250" y1="180" x2="230" y2="250" stroke="#d3dbe5" stroke-width="7"/>
+  <line x1="960" y1="190" x2="940" y2="260" stroke="#d3dbe5" stroke-width="7"/>
+  <line x1="1060" y1="180" x2="1040" y2="250" stroke="#d3dbe5" stroke-width="7"/>
+  <text x="60" y="92" fill="#ffffff" font-family="Poppins, Arial, sans-serif" font-size="50" font-weight="700">Typhoon Shelter Repair Fund</text>
+</svg>

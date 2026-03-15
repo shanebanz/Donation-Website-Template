@@ -7,6 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 $routes->get('/', 'Home::index');
+$routes->get('/how-it-works', 'Home::howItWorks');
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,11 @@ $routes->get('/admin/donations','Admin::donations');
 $routes->get('/admin/campaigns','Admin::campaigns');
 $routes->get('/admin/campaign/create','Admin::createCampaign');
 $routes->post('/admin/campaign/store','Admin::storeCampaign');
+
+$routes->get('/admin/users','Admin::users');
+$routes->get('/admin/users/disable/(:num)','Admin::disableUser/$1');
+$routes->get('/admin/users/enable/(:num)','Admin::enableUser/$1');
+$routes->get('/admin/users/delete/(:num)','Admin::deleteUser/$1');
 
 $routes->get('/admin/campaign/edit/(:num)','Admin::editCampaign/$1');
 $routes->post('/admin/campaign/update/(:num)','Admin::updateCampaign/$1');

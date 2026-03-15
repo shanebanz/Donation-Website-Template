@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-label="Rice packs for families campaign">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1c2e4a"/>
+      <stop offset="100%" stop-color="#385e7b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg2)"/>
+  <rect y="470" width="1200" height="250" fill="#2f5b43"/>
+  <ellipse cx="250" cy="460" rx="160" ry="52" fill="#d7c38f"/>
+  <rect x="120" y="290" width="260" height="180" rx="80" fill="#f2deab"/>
+  <text x="184" y="385" fill="#886433" font-family="Poppins, Arial, sans-serif" font-size="44" font-weight="700">RICE</text>
+  <ellipse cx="600" cy="460" rx="160" ry="52" fill="#d7c38f"/>
+  <rect x="470" y="290" width="260" height="180" rx="80" fill="#f2deab"/>
+  <text x="534" y="385" fill="#886433" font-family="Poppins, Arial, sans-serif" font-size="44" font-weight="700">RICE</text>
+  <ellipse cx="950" cy="460" rx="160" ry="52" fill="#d7c38f"/>
+  <rect x="820" y="290" width="260" height="180" rx="80" fill="#f2deab"/>
+  <text x="884" y="385" fill="#886433" font-family="Poppins, Arial, sans-serif" font-size="44" font-weight="700">RICE</text>
+  <text x="64" y="96" fill="#ffffff" font-family="Poppins, Arial, sans-serif" font-size="50" font-weight="700">Rice Packs for 20 Families</text>
+</svg>

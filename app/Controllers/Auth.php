@@ -26,7 +26,7 @@ class Auth extends BaseController
         if (in_array($login, ['admin', 'admini'], true) && $password === 'admin')
         {
             session()->set('isAdmin', true);
-            return redirect()->to('/admin/campaigns');
+            return redirect()->to(base_url('admin/campaigns'));
         }
 
         $userModel = new \App\Models\UserModel();
@@ -40,6 +40,10 @@ class Auth extends BaseController
 
         if ($user && password_verify($password, $user['password']))
         {
+            if (isset($user['is_active']) && (int) $user['is_active'] === 0) {
+                return redirect()->back()->with('error','This account is disabled. Contact support for assistance.');
+            }
+
             if(isset($user['is_verified']) && $user['is_verified'] == 0){
                 return redirect()->back()->with('error','Please verify your email first.');
             }
@@ -56,7 +60,7 @@ class Auth extends BaseController
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/login');
+        return redirect()->to(base_url('login'));
     }
 
     public function register()
@@ -74,14 +78,22 @@ public function registerUser()
 
     $userModel = new \App\Models\UserModel();
 
-$userModel->save([
-    'name' => $name,
-    'email' => $email,
-    'password' => $password,
-    'role' => 'user',
-    'verification_token' => $token,
-    'is_verified' => 0
-]);
+    $userData = [
+        'name' => $name,
+        'email' => $email,
+        'password' => $password,
+        'role' => 'user',
+        'verification_token' => $token,
+        'is_verified' => 0
+    ];
+
+    $db = \Config\Database::connect();
+    $userFields = $db->getFieldNames('users');
+    if (in_array('is_active', $userFields, true)) {
+        $userData['is_active'] = 1;
+    }
+
+    $userModel->save($userData);
 
     // SEND EMAIL
     $emailService = \Config\Services::email();

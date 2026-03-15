@@ -16,6 +16,10 @@ public function index($id)
 
     $campaign = $builder->get()->getRow();
 
+    if (!$campaign) {
+        return redirect()->to(base_url('campaigns'))->with('error', 'Campaign not found.');
+    }
+
     // calculate progress
     $progress = 0;
 
@@ -59,7 +63,7 @@ public function save()
 
     $db->table('donations')->insert($data);
 
-    return redirect()->to('/campaign/'.$campaign_id);
+    return redirect()->to(base_url('campaign/' . $campaign_id));
 }
 
 }

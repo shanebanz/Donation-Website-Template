@@ -16,6 +16,7 @@ class UserModel extends Model
         'password',
         'role',
         'verification_token',
-        'is_verified'
+        'is_verified',
+        'is_active'
     ];
 }

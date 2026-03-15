@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-label="Medicine support campaign">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f2027"/>
+      <stop offset="100%" stop-color="#2c5364"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <rect x="130" y="140" width="940" height="460" rx="32" fill="#f3f6f8"/>
+  <rect x="220" y="220" width="220" height="300" rx="20" fill="#ffffff" stroke="#d9e2e8" stroke-width="8"/>
+  <rect x="280" y="275" width="100" height="190" rx="10" fill="#f97f7f"/>
+  <rect x="250" y="345" width="160" height="50" rx="10" fill="#ffffff"/>
+  <circle cx="660" cy="360" r="150" fill="#dfe9ef"/>
+  <rect x="590" y="300" width="140" height="120" rx="18" fill="#5ea3c2"/>
+  <rect x="645" y="255" width="30" height="210" rx="12" fill="#ffffff"/>
+  <rect x="565" y="345" width="190" height="30" rx="12" fill="#ffffff"/>
+  <rect x="840" y="250" width="150" height="70" rx="12" fill="#9dc3d4"/>
+  <rect x="840" y="340" width="150" height="70" rx="12" fill="#9dc3d4"/>
+  <rect x="840" y="430" width="150" height="70" rx="12" fill="#9dc3d4"/>
+  <text x="170" y="96" fill="#ffffff" font-family="Poppins, Arial, sans-serif" font-size="50" font-weight="700">Medicines for Lola Rosa</text>
+</svg>
