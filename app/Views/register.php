@@ -13,8 +13,8 @@
 <form method="post" action="/sinag-donation/public/register">
 
 <div class="mb-3">
-<label>Username</label>
-<input type="text" name="username" class="form-control" required>
+<label>Name</label>
+<input type="text" name="name" class="form-control" required>
 </div>
 
 <div class="mb-3">

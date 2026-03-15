@@ -2,10 +2,11 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
+use App\Models\UserModel;
 
-class Auth extends Controller
+class Auth extends BaseController
 {
+
     public function index()
     {
         return view('login');
@@ -16,19 +17,40 @@ class Auth extends Controller
         return view('login');
     }
 
-    // PROBLEM IS THAT I CAN'T LOGIN AS ADMIN ANYMORE
     public function loginUser()
     {
-        $username = $this->request->getPost('username');
+        $login = trim((string) ($this->request->getPost('login') ?? $this->request->getPost('email')));
         $password = $this->request->getPost('password');
 
-        if ($username === 'admin' && $password === 'admin')
+        // ADMIN LOGIN
+        if (in_array($login, ['admin', 'admini'], true) && $password === 'admin')
         {
             session()->set('isAdmin', true);
             return redirect()->to('/admin/campaigns');
         }
 
-        return redirect()->back()->with('error', 'Invalid login');
+        $userModel = new \App\Models\UserModel();
+
+        $user = $userModel
+            ->groupStart()
+                ->where('email', $login)
+                ->orWhere('name', $login)
+            ->groupEnd()
+            ->first();
+
+        if ($user && password_verify($password, $user['password']))
+        {
+            if(isset($user['is_verified']) && $user['is_verified'] == 0){
+                return redirect()->back()->with('error','Please verify your email first.');
+            }
+
+            session()->set('user_id', $user['id']);
+            session()->set('name', $user['name']);
+
+            return redirect()->to('/');
+        }
+
+        return redirect()->back()->with('error','Invalid login');
     }
 
     public function logout()
@@ -42,39 +64,64 @@ class Auth extends Controller
         return view('register');
     }
 
-    public function registerUser()
-    {
-        $username = $this->request->getPost('username');
-        $email = $this->request->getPost('email');
-        $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
-
-        $userModel = new UserModel();
-
-        $userModel->save([
-            'username' => $username,
-            'email' => $email,
-            'password' => $password
-        ]);
-
-        return redirect()->to('/login')->with('msg','Account created. You can now login.');
-    }
-
-public function verify($token)
+public function registerUser()
 {
+    $name = $this->request->getPost('name');
+    $email = $this->request->getPost('email');
+    $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+
+    $token = bin2hex(random_bytes(32));
+
     $userModel = new \App\Models\UserModel();
 
-    $user = $userModel->where('verification_token',$token)->first();
+$userModel->save([
+    'name' => $name,
+    'email' => $email,
+    'password' => $password,
+    'role' => 'user',
+    'verification_token' => $token,
+    'is_verified' => 0
+]);
 
-    if($user){
+    // SEND EMAIL
+    $emailService = \Config\Services::email();
 
-        $userModel->update($user['id'],[
-            'is_verified' => 1,
-            'verification_token' => null
-        ]);
+    $emailService->setTo($email);
+    $emailService->setFrom('norwood0602@gmail.com','Sinag Donation');
 
-        return redirect()->to('/login')->with('msg','Email verified. You can now login.');
+    $emailService->setSubject('Verify your account');
+
+    $link = base_url('/verify/'.$token);
+
+    $message = "
+    <h2>Welcome to SINAG Donation</h2>
+    <p>Please verify your email by clicking the link below:</p>
+    <a href='$link'>Verify Account</a>
+    ";
+
+    $emailService->setMessage($message);
+    $emailService->send();
+
+    return redirect()->to('/login')->with('msg','Account created! Check your email to verify.');
+}
+
+    public function verify($token)
+    {
+        $userModel = new UserModel();
+
+        $user = $userModel->where('verification_token',$token)->first();
+
+        if($user){
+
+            $userModel->update($user['id'],[
+                'is_verified' => 1,
+                'verification_token' => null
+            ]);
+
+            return redirect()->to('/login')->with('msg','Email verified. You can now login.');
+        }
+
+        return redirect()->to('/login')->with('msg','Invalid verification link.');
     }
 
-    return redirect()->to('/login')->with('msg','Invalid verification link.');
-}
 }
