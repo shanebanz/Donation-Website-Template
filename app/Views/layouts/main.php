@@ -9,6 +9,8 @@
 
 <link rel="stylesheet" href="/sinag-donation/public/css/style.css">
 
+<link rel="stylesheet" href="/sinag-donation/public/css/skeleton-loader.css">
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
@@ -33,8 +35,8 @@ font-size:16px;
 
 body{
 background:
-radial-gradient(1100px 520px at 95% -10%,#dce7c6 0%,rgba(220,231,198,0) 60%),
-radial-gradient(800px 420px at -10% 105%,#dbe8f0 0%,rgba(219,232,240,0) 60%),
+radial-gradient(900px 420px at 110% -20%,rgba(188,211,156,.28) 0%,rgba(188,211,156,0) 62%),
+radial-gradient(760px 360px at -12% 108%,rgba(183,209,225,.24) 0%,rgba(183,209,225,0) 60%),
 var(--sinag-bg);
 font-family:'Plus Jakarta Sans', sans-serif;
 color:var(--sinag-text);
@@ -42,6 +44,7 @@ font-size:1rem;
 line-height:1.62;
 display:flex;
 flex-direction:column;
+overflow-x:hidden;
 }
 
 .main-content{
@@ -403,17 +406,89 @@ border-color:var(--sinag-border);
 gap:2px;
 }
 
+.back-icon-btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:42px;
+height:42px;
+border-radius:999px;
+border:1px solid var(--sinag-border);
+background:#fff;
+color:var(--sinag-text);
+box-shadow:0 4px 10px rgba(15,25,18,.08);
+transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
+}
+
+.back-icon-btn:hover,
+.back-icon-btn:focus{
+background:#f5f8f3;
+box-shadow:0 8px 16px rgba(15,25,18,.12);
+transform:translateY(-1px);
+color:var(--sinag-text);
+}
+
+.content-with-back.has-back{
+display:grid;
+grid-template-columns:auto minmax(0,1fr);
+gap:14px;
+align-items:start;
+}
+
+.content-main{
+min-width:0;
+}
+
+.content-with-back .back-icon-btn{
+position:sticky;
+top:92px;
+}
+
+@media (max-width: 768px){
+.content-with-back.has-back{
+grid-template-columns:1fr;
+}
+
+.content-with-back .back-icon-btn{
+position:static;
+margin-bottom:10px;
+}
+}
+
 </style>
 
 </head>
 
-<body>
-
 <?php
-$path = trim(service('uri')->getPath(), '/');
+$rawPath = trim(service('uri')->getPath(), '/');
+$path = preg_replace('#^sinag-donation/public/?#', '', $rawPath);
+$path = preg_replace('#^index\.php/?#', '', (string) $path);
+$path = trim((string) $path, '/');
 $isCampaigns = $path === 'campaigns' || str_starts_with($path, 'campaign/') || str_starts_with($path, 'donate/');
 $isHowItWorks = $path === 'how-it-works';
+$skeletonTarget = null;
+
+if ($path === '' || $path === 'home') {
+  $skeletonTarget = 'skeleton-home-page';
+} elseif ($path === 'campaigns') {
+  $skeletonTarget = 'skeleton-campaigns-page';
+} elseif ($path === 'dashboard') {
+  $skeletonTarget = 'skeleton-dashboard-page';
+} elseif ($path === 'login' || $path === 'register') {
+  $skeletonTarget = 'skeleton-form-page';
+} elseif ($path === 'how-it-works') {
+  $skeletonTarget = 'skeleton-how-page';
+} elseif (preg_match('#(^|/)campaign/\d+($|/)#', $path) === 1) {
+  $skeletonTarget = 'skeleton-campaign-detail';
+} elseif (preg_match('#(^|/)donate/\d+($|/)#', $path) === 1) {
+  $skeletonTarget = 'skeleton-donate-page';
+}
+
+$showBackButton = preg_match('#(^|/)campaign/\d+($|/)#', $path) === 1
+|| preg_match('#(^|/)donate/\d+($|/)#', $path) === 1;
 ?>
+
+<body class="<?= $skeletonTarget ? 'skeleton-loading' : '' ?>" data-skeleton-target="<?= esc((string) $skeletonTarget) ?>">
 
 <nav class="navbar navbar-expand-lg bg-white shadow-sm">
 <div class="container">
@@ -475,6 +550,23 @@ Register
 
 <div class="container mt-5">
 
+<div class="content-with-back<?= $showBackButton ? ' has-back' : '' ?>">
+
+<?php if($showBackButton): ?>
+<button
+type="button"
+class="back-icon-btn"
+aria-label="Go back"
+onclick="if(window.history.length > 1){ window.history.back(); } else { window.location.href='/sinag-donation/public/'; }"
+>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</button>
+<?php endif; ?>
+
+<div class="content-main">
+
 <?php if(session()->getFlashdata('error')): ?>
 <div class="alert alert-danger shadow-sm border-0">
 <?= session()->getFlashdata('error') ?>
@@ -487,7 +579,180 @@ Register
 </div>
 <?php endif; ?>
 
+<!-- SKELETON LOADERS - One for each page type -->
+
+<div id="page-skeletons">
+
+<!-- Home Page Skeleton -->
+<div id="skeleton-home-page" class="skeleton-home-page<?= $skeletonTarget === 'skeleton-home-page' ? ' active' : '' ?>">
+  <div class="skeleton-home-hero">
+    <div class="skeleton-home-title skeleton"></div>
+    <div class="skeleton-home-line skeleton"></div>
+    <div class="skeleton-home-line skeleton"></div>
+    <div class="skeleton-home-line short skeleton"></div>
+  </div>
+  <div class="skeleton-home-cards">
+    <?php for($i = 0; $i < 3; $i++): ?>
+    <div class="skeleton-home-card">
+      <div class="skeleton-home-card-image skeleton"></div>
+      <div class="skeleton-card-line title skeleton"></div>
+      <div class="skeleton-card-line skeleton"></div>
+      <div class="skeleton-card-line short skeleton"></div>
+    </div>
+    <?php endfor; ?>
+  </div>
+</div>
+
+<!-- How It Works Skeleton -->
+<div id="skeleton-how-page" class="skeleton-how-page<?= $skeletonTarget === 'skeleton-how-page' ? ' active' : '' ?>">
+  <div class="skeleton-how-banner">
+    <div class="skeleton-home-title skeleton"></div>
+    <div class="skeleton-home-line skeleton"></div>
+    <div class="skeleton-home-line short skeleton"></div>
+  </div>
+  <?php for($i = 0; $i < 4; $i++): ?>
+  <div class="skeleton-how-step skeleton"></div>
+  <?php endfor; ?>
+  <div class="mt-3">
+    <?php for($i = 0; $i < 3; $i++): ?>
+    <div class="skeleton-how-faq skeleton"></div>
+    <?php endfor; ?>
+  </div>
+</div>
+
+<!-- Campaigns Page Skeleton -->
+<div id="skeleton-campaigns-page" class="skeleton-campaigns-page<?= $skeletonTarget === 'skeleton-campaigns-page' ? ' active' : '' ?>">
+  <section class="skeleton-page-header">
+    <div class="skeleton-header-content">
+      <div class="skeleton-header-text">
+        <div class="skeleton-header-title skeleton"></div>
+        <div class="skeleton-header-desc skeleton"></div>
+        <div class="skeleton-header-desc skeleton"></div>
+      </div>
+      <div class="skeleton-header-visual skeleton"></div>
+    </div>
+  </section>
+  
+  <div class="skeleton-tabs">
+    <div class="skeleton-tab skeleton"></div>
+    <div class="skeleton-tab skeleton"></div>
+  </div>
+  
+  <div class="skeleton-campaigns-grid">
+    <?php for($i = 0; $i < 6; $i++): ?>
+    <div class="skeleton-campaign-card">
+      <div class="skeleton-card-image skeleton"></div>
+      <div class="skeleton-card-content">
+        <div class="skeleton-card-title skeleton"></div>
+        <div class="skeleton-card-title-line-2 skeleton"></div>
+        <div class="skeleton-card-text skeleton"></div>
+        <div class="skeleton-card-text skeleton"></div>
+        <div class="skeleton-card-text skeleton"></div>
+        <div class="skeleton-card-footer">
+          <div class="skeleton-card-stat skeleton"></div>
+          <div class="skeleton-card-stat skeleton"></div>
+        </div>
+        <div class="skeleton-card-button skeleton"></div>
+      </div>
+    </div>
+    <?php endfor; ?>
+  </div>
+</div>
+
+<!-- Dashboard Page Skeleton -->
+<div id="skeleton-dashboard-page" class="skeleton-dashboard-page<?= $skeletonTarget === 'skeleton-dashboard-page' ? ' active' : '' ?>">
+  <div class="skeleton-stats-grid">
+    <?php for($i = 0; $i < 4; $i++): ?>
+    <div class="skeleton-stat-card">
+      <div class="skeleton-stat-label skeleton"></div>
+      <div class="skeleton-stat-value skeleton"></div>
+    </div>
+    <?php endfor; ?>
+  </div>
+  
+  <div class="skeleton-content-section">
+    <div class="skeleton-section-title skeleton"></div>
+    <?php for($i = 0; $i < 5; $i++): ?>
+    <div class="skeleton-table-row">
+      <div class="skeleton-table-cell skeleton"></div>
+      <div class="skeleton-table-cell skeleton"></div>
+      <div class="skeleton-table-cell skeleton"></div>
+      <div class="skeleton-table-cell skeleton"></div>
+    </div>
+    <?php endfor; ?>
+  </div>
+</div>
+
+<!-- Form Page Skeleton (Login/Register) -->
+<div id="skeleton-form-page" class="skeleton-form-page<?= $skeletonTarget === 'skeleton-form-page' ? ' active' : '' ?>">
+  <div class="skeleton-form-container">
+    <div class="skeleton-form-title skeleton"></div>
+    <div class="skeleton-form-input skeleton"></div>
+    <div class="skeleton-form-input skeleton"></div>
+    <div class="skeleton-form-input skeleton"></div>
+    <div class="skeleton-form-button skeleton"></div>
+    <div class="skeleton-form-link skeleton"></div>
+  </div>
+</div>
+
+<!-- Donate Page Skeleton -->
+<div id="skeleton-donate-page" class="skeleton-donate-page<?= $skeletonTarget === 'skeleton-donate-page' ? ' active' : '' ?>">
+  <div class="skeleton-donate-header">
+    <div class="skeleton-donate-title skeleton"></div>
+    <div class="skeleton-donate-desc skeleton"></div>
+    <div class="skeleton-donate-desc skeleton"></div>
+  </div>
+  
+  <div class="skeleton-donate-form">
+    <div class="skeleton-amount-options">
+      <div class="skeleton-amount-btn skeleton"></div>
+      <div class="skeleton-amount-btn skeleton"></div>
+      <div class="skeleton-amount-btn skeleton"></div>
+      <div class="skeleton-amount-btn skeleton"></div>
+    </div>
+    <div class="skeleton-form-input skeleton"></div>
+    <div class="skeleton-form-input skeleton"></div>
+    <div class="skeleton-form-button skeleton"></div>
+  </div>
+</div>
+
+<!-- Campaign Detail Skeleton -->
+<div id="skeleton-campaign-detail" class="skeleton-campaign-detail<?= $skeletonTarget === 'skeleton-campaign-detail' ? ' active' : '' ?>">
+  <div class="skeleton-campaign-detail-hero skeleton"></div>
+  
+  <div class="skeleton-detail-info">
+    <div class="skeleton-detail-main">
+      <div class="skeleton-detail-title skeleton"></div>
+      <div class="skeleton-detail-text skeleton"></div>
+      <div class="skeleton-detail-text skeleton"></div>
+      <div class="skeleton-detail-text skeleton"></div>
+    </div>
+    <div class="skeleton-detail-sidebar">
+      <div class="skeleton-sidebar-item">
+        <div class="skeleton-sidebar-label skeleton"></div>
+        <div class="skeleton-sidebar-value skeleton"></div>
+      </div>
+      <div class="skeleton-sidebar-item">
+        <div class="skeleton-sidebar-label skeleton"></div>
+        <div class="skeleton-sidebar-value skeleton"></div>
+      </div>
+      <div class="skeleton-sidebar-item">
+        <div class="skeleton-sidebar-label skeleton"></div>
+        <div class="skeleton-sidebar-value skeleton"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div id="page-content">
 <?= $this->renderSection('content') ?>
+</div>
+
+</div>
+
+</div>
 
 </div>
 
@@ -542,6 +807,8 @@ Register
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="/sinag-donation/public/js/skeleton-loader.js"></script>
 
 </body>
 

@@ -1,0 +1,398 @@
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #e4e8e1 25%, #f2f5ef 37%, #e4e8e1 63%);
+  background-size: 300% 100%;
+  animation: skeleton-shimmer 1.25s linear infinite;
+}
+
+#page-skeletons > div {
+  display: none;
+}
+
+body.skeleton-loading #page-content {
+  display: none;
+}
+
+body.skeleton-loading #page-skeletons > .active {
+  display: block;
+}
+
+body:not(.skeleton-loading) #page-skeletons {
+  display: none !important;
+}
+
+.skeleton-page-header {
+  border-radius: 18px;
+  padding: 28px;
+  margin-bottom: 22px;
+  background: linear-gradient(135deg, #0f1713 0%, #1e2c24 55%, #304538 100%);
+}
+
+.skeleton-header-content {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.skeleton-header-title {
+  width: 250px;
+  height: 32px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.skeleton-header-desc {
+  width: 100%;
+  height: 15px;
+  border-radius: 6px;
+  margin-bottom: 9px;
+}
+
+.skeleton-header-desc.short {
+  width: 82%;
+}
+
+.skeleton-header-visual {
+  width: 100%;
+  height: 220px;
+  border-radius: 14px;
+}
+
+.skeleton-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.skeleton-tab {
+  width: 140px;
+  height: 38px;
+  border-radius: 8px;
+}
+
+.skeleton-campaigns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.skeleton-campaign-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.skeleton-card-image {
+  width: 100%;
+  height: 200px;
+}
+
+.skeleton-card-content {
+  padding: 16px;
+}
+
+.skeleton-card-line {
+  height: 14px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.skeleton-card-line.title {
+  height: 18px;
+  width: 92%;
+}
+
+.skeleton-card-line.title-short {
+  height: 18px;
+  width: 74%;
+}
+
+.skeleton-card-line.short {
+  width: 68%;
+}
+
+.skeleton-card-button {
+  width: 100%;
+  height: 36px;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.skeleton-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.skeleton-stat-card,
+.skeleton-content-section,
+.skeleton-form-container,
+.skeleton-donate-form,
+.skeleton-detail-sidebar,
+.skeleton-data-table,
+.skeleton-admin-block {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.skeleton-stat-label {
+  width: 90px;
+  height: 14px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.skeleton-stat-value {
+  width: 130px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.skeleton-table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 100px;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.skeleton-table-cell {
+  height: 15px;
+  border-radius: 4px;
+}
+
+.skeleton-form-container {
+  max-width: 430px;
+  margin: 30px auto;
+}
+
+.skeleton-form-title {
+  width: 210px;
+  height: 30px;
+  border-radius: 6px;
+  margin-bottom: 18px;
+}
+
+.skeleton-form-input {
+  width: 100%;
+  height: 42px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+
+.skeleton-form-button {
+  width: 100%;
+  height: 44px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.skeleton-form-link {
+  width: 190px;
+  height: 14px;
+  border-radius: 4px;
+  margin-top: 12px;
+}
+
+.skeleton-donate-header {
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #5f7c2f 0%, #4e6726 100%);
+}
+
+.skeleton-donate-title {
+  width: 280px;
+  height: 28px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.skeleton-donate-desc {
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  margin-bottom: 9px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.skeleton-donate-desc.short {
+  width: 78%;
+}
+
+.skeleton-amount-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(90px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.skeleton-amount-btn {
+  height: 44px;
+  border-radius: 8px;
+}
+
+.skeleton-campaign-detail-hero {
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  margin-bottom: 22px;
+}
+
+.skeleton-detail-info {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.skeleton-detail-title {
+  width: 320px;
+  height: 28px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+
+.skeleton-detail-line {
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.skeleton-detail-line.short {
+  width: 72%;
+}
+
+.skeleton-home-hero {
+  background: #fff;
+  border-radius: 16px;
+  padding: 34px;
+  margin-bottom: 22px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.skeleton-home-title {
+  width: 320px;
+  height: 36px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+
+.skeleton-home-line {
+  width: 100%;
+  height: 16px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.skeleton-home-line.short {
+  width: 66%;
+}
+
+.skeleton-home-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.skeleton-home-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.skeleton-home-card-image {
+  width: 100%;
+  height: 140px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.skeleton-how-banner {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.skeleton-how-step {
+  height: 64px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.skeleton-how-faq {
+  height: 48px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.skeleton-admin-head {
+  height: 110px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.skeleton-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.skeleton-admin-kpi {
+  height: 84px;
+  border-radius: 10px;
+}
+
+.skeleton-admin-table-head {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.skeleton-admin-head-cell {
+  height: 16px;
+  border-radius: 4px;
+}
+
+.skeleton-admin-form-title {
+  width: 260px;
+  height: 28px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 900px) {
+  .skeleton-header-content,
+  .skeleton-detail-info,
+  .skeleton-home-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .skeleton-amount-options,
+  .skeleton-admin-grid {
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .skeleton-campaigns-grid,
+  .skeleton-stats-grid,
+  .skeleton-table-row,
+  .skeleton-admin-table-head {
+    grid-template-columns: 1fr;
+  }
+}

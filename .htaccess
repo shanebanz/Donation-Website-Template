@@ -1,0 +1,3 @@
+<IfModule mod_redirect.c>
+    Redirect 301 / /sinag-donation/public/
+</IfModule>

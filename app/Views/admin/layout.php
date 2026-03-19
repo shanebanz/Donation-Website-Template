@@ -6,6 +6,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/sinag-donation/public/css/skeleton-loader.css">
 
 <style>
 
@@ -168,11 +169,78 @@ color:#a0b5a5;
 border-color:#dde6da;
 }
 
+.back-icon-btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:40px;
+height:40px;
+border-radius:999px;
+border:1px solid #d8e2da;
+background:#fff;
+color:#1d2b23;
+box-shadow:0 4px 10px rgba(15,20,18,.08);
+transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
+}
+
+.back-icon-btn:hover,
+.back-icon-btn:focus{
+background:#eef4ef;
+box-shadow:0 8px 14px rgba(15,20,18,.12);
+transform:translateY(-1px);
+color:#1d2b23;
+}
+
+.admin-content-with-back.has-back{
+display:grid;
+grid-template-columns:auto minmax(0,1fr);
+gap:14px;
+align-items:start;
+}
+
+.admin-content-main{
+min-width:0;
+}
+
+.admin-content-with-back .back-icon-btn{
+position:sticky;
+top:88px;
+}
+
+@media (max-width: 768px){
+.admin-content-with-back.has-back{
+grid-template-columns:1fr;
+}
+
+.admin-content-with-back .back-icon-btn{
+position:static;
+margin-bottom:10px;
+}
+}
+
 </style>
 
 </head>
 
-<body>
+<?php
+$adminRawPath = trim(service('uri')->getPath(), '/');
+$adminPath = preg_replace('#^sinag-donation/public/?#', '', $adminRawPath);
+$adminPath = preg_replace('#^index\.php/?#', '', (string) $adminPath);
+$adminPath = trim((string) $adminPath, '/');
+
+$adminSkeletonTarget = null;
+if ($adminPath === 'admin') {
+  $adminSkeletonTarget = 'skeleton-admin-dashboard-page';
+} elseif (str_starts_with($adminPath, 'admin/campaign/create') || str_starts_with($adminPath, 'admin/campaign/edit')) {
+  $adminSkeletonTarget = 'skeleton-admin-form-page';
+} elseif (str_starts_with($adminPath, 'admin/')) {
+  $adminSkeletonTarget = 'skeleton-admin-table-page';
+}
+
+$showBackButton = $adminPath !== 'admin';
+?>
+
+<body class="<?= $adminSkeletonTarget ? 'skeleton-loading' : '' ?>" data-skeleton-target="<?= esc((string) $adminSkeletonTarget) ?>">
 
 <nav class="navbar navbar-expand-lg admin-nav navbar-dark">
 <div class="container">
@@ -214,13 +282,90 @@ Logout
 <div class="container">
 <div class="admin-content">
 
+<div class="admin-content-with-back<?= $showBackButton ? ' has-back' : '' ?>">
+
+<?php if($showBackButton): ?>
+<button
+type="button"
+class="back-icon-btn"
+aria-label="Go back"
+onclick="if(window.history.length > 1){ window.history.back(); } else { window.location.href='/sinag-donation/public/admin'; }"
+>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</button>
+<?php endif; ?>
+
+<div class="admin-content-main">
+
+<!-- Admin Skeleton Loader -->
+<div id="page-skeletons">
+<div id="skeleton-admin-dashboard-page" class="skeleton-admin-page<?= $adminSkeletonTarget === 'skeleton-admin-dashboard-page' ? ' active' : '' ?>">
+  <div class="skeleton-admin-head skeleton"></div>
+  <div class="skeleton-admin-grid">
+    <div class="skeleton-admin-kpi skeleton"></div>
+    <div class="skeleton-admin-kpi skeleton"></div>
+    <div class="skeleton-admin-kpi skeleton"></div>
+    <div class="skeleton-admin-kpi skeleton"></div>
+  </div>
+  <div class="skeleton-admin-block">
+    <?php for($i = 0; $i < 4; $i++): ?>
+    <div class="skeleton-table-row">
+      <div class="skeleton-table-cell skeleton"></div>
+      <div class="skeleton-table-cell skeleton"></div>
+      <div class="skeleton-table-cell skeleton"></div>
+      <div class="skeleton-table-cell skeleton"></div>
+    </div>
+    <?php endfor; ?>
+  </div>
+</div>
+
+<div id="skeleton-admin-table-page" class="skeleton-admin-page<?= $adminSkeletonTarget === 'skeleton-admin-table-page' ? ' active' : '' ?>">
+  <div class="skeleton-admin-block">
+    <div class="skeleton-admin-table-head">
+      <div class="skeleton-admin-head-cell skeleton"></div>
+      <div class="skeleton-admin-head-cell skeleton"></div>
+      <div class="skeleton-admin-head-cell skeleton"></div>
+      <div class="skeleton-admin-head-cell skeleton"></div>
+    </div>
+    <?php for($i = 0; $i < 8; $i++): ?>
+    <div class="skeleton-table-row">
+      <div class="skeleton-table-cell skeleton"></div>
+      <div class="skeleton-table-cell skeleton"></div>
+      <div class="skeleton-table-cell skeleton"></div>
+      <div class="skeleton-table-cell skeleton"></div>
+    </div>
+    <?php endfor; ?>
+  </div>
+</div>
+
+<div id="skeleton-admin-form-page" class="skeleton-admin-page<?= $adminSkeletonTarget === 'skeleton-admin-form-page' ? ' active' : '' ?>">
+  <div class="skeleton-admin-block">
+    <div class="skeleton-admin-form-title skeleton"></div>
+    <div class="skeleton-form-input skeleton"></div>
+    <div class="skeleton-form-input skeleton"></div>
+    <div class="skeleton-form-input skeleton"></div>
+    <div class="skeleton-form-input skeleton"></div>
+    <div class="skeleton-form-button skeleton"></div>
+  </div>
+</div>
+</div>
+
+<div id="page-content">
 <?= $this->renderSection('content') ?>
+</div>
+
+</div>
+
+</div>
 
 </div>
 </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/sinag-donation/public/js/skeleton-loader.js"></script>
 
 </body>
 </html>
