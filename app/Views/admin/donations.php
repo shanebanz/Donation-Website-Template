@@ -5,6 +5,16 @@
 <?php
 $currentPage = $currentPage ?? 1;
 $totalPages  = $totalPages  ?? 1;
+
+$formatDonorName = static function ($donorName): string {
+	$name = (string) $donorName;
+
+	if (preg_match('/^__ANON__:\s*/', $name) === 1) {
+		return 'Anonymous';
+	}
+
+	return $name !== '' ? $name : 'Anonymous';
+};
 ?>
 
 <h2>Donations</h2>
@@ -34,7 +44,7 @@ $totalPages  = $totalPages  ?? 1;
 
 <td><?= esc($d->title) ?></td>
 
-<td><?= esc($d->donor_name) ?></td>
+<td><?= esc($formatDonorName($d->donor_name)) ?></td>
 
 <td>₱<?= number_format($d->amount) ?></td>
 
@@ -48,7 +58,7 @@ $totalPages  = $totalPages  ?? 1;
 	data-bs-toggle="modal"
 	data-bs-target="#proofModal"
 	data-proof-url="/sinag-donation/public/uploads/<?= esc($d->proof) ?>"
-	data-donor="<?= esc($d->donor_name) ?>"
+	data-donor="<?= esc($formatDonorName($d->donor_name)) ?>"
 	data-reference="<?= esc($d->reference_number) ?>"
 >
 View Screenshot
