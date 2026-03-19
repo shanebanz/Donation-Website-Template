@@ -25,6 +25,8 @@ class Auth extends BaseController
         // ADMIN LOGIN
         if (in_array($login, ['admin', 'admini'], true) && $password === 'admin')
         {
+            session()->remove('user_id');
+            session()->remove('name');
             session()->set('isAdmin', true);
             return redirect()->to(base_url('admin/campaigns'));
         }
@@ -50,6 +52,7 @@ class Auth extends BaseController
 
             session()->set('user_id', $user['id']);
             session()->set('name', $user['name']);
+            session()->remove('isAdmin');
 
             return redirect()->to('/');
         }

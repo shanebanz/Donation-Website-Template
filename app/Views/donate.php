@@ -187,7 +187,11 @@ font-size:.93rem;
 
 <div class="mb-3">
 <label class="form-label">Donor Name</label>
-<input type="text" name="donor_name" class="form-control" required>
+<input type="text" name="donor_name" id="donor_name" class="form-control" value="<?= esc((string) (session()->get('name') ?? '')) ?>" required>
+<div class="form-check mt-2">
+<input class="form-check-input" type="checkbox" id="is_anonymous" name="is_anonymous" value="1">
+<label class="form-check-label" for="is_anonymous">Donate anonymously</label>
+</div>
 </div>
 
 <div class="mb-3">
@@ -210,6 +214,33 @@ Submit Donation
 </button>
 
 </form>
+
+<script>
+(() => {
+	const donorInput = document.getElementById('donor_name');
+	const anonymousToggle = document.getElementById('is_anonymous');
+	if (!donorInput || !anonymousToggle) {
+		return;
+	}
+
+	const initialValue = donorInput.value;
+
+	const syncAnonymousState = () => {
+		if (anonymousToggle.checked) {
+			donorInput.dataset.previousValue = donorInput.value;
+			donorInput.value = 'Anonymous';
+			donorInput.readOnly = true;
+			donorInput.required = false;
+		} else {
+			donorInput.readOnly = false;
+			donorInput.required = true;
+			donorInput.value = donorInput.dataset.previousValue || initialValue || '';
+		}
+	};
+
+	anonymousToggle.addEventListener('change', syncAnonymousState);
+})();
+</script>
 
 </div>
 </section>

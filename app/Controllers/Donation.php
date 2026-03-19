@@ -41,6 +41,16 @@ public function save()
 
     $campaign_id = $this->request->getPost('campaign_id');
     $amount = $this->request->getPost('amount');
+    $isAnonymous = $this->request->getPost('is_anonymous') === '1';
+    $rawDonorName = trim((string) $this->request->getPost('donor_name'));
+    $sessionName = trim((string) (session()->get('name') ?? ''));
+
+    if ($isAnonymous) {
+        $ownerName = $sessionName !== '' ? $sessionName : ($rawDonorName !== '' ? $rawDonorName : 'Guest');
+        $donorName = '__ANON__:' . $ownerName;
+    } else {
+        $donorName = $rawDonorName !== '' ? $rawDonorName : ($sessionName !== '' ? $sessionName : 'Anonymous');
+    }
 
     $file = $this->request->getFile('proof');
     $proofName = null;
@@ -53,7 +63,7 @@ public function save()
 
     $data = [
         'campaign_id' => $campaign_id,
-        'donor_name' => $this->request->getPost('donor_name'),
+        'donor_name' => $donorName,
         'amount' => $amount,
         'payment_method' => 'GCash',
         'reference_number' => $this->request->getPost('reference'),

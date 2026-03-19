@@ -23,7 +23,7 @@
 
 <tr>
 
-<td><?= $d->donor_name ?></td>
+<td><?= str_starts_with((string) $d->donor_name, '__ANON__:') ? 'Anonymous' : esc((string) $d->donor_name) ?></td>
 
 <td>₱<?= number_format($d->amount) ?></td>
 

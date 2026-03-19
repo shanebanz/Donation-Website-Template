@@ -532,18 +532,7 @@ How It Works
 
 <ul class="navbar-nav">
 
-<?php if($isAdminSession): ?>
-<li class="nav-item">
-<a class="btn btn-primary ms-2" href="/sinag-donation/public/admin">
-Admin Panel
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/sinag-donation/public/logout">
-Logout
-</a>
-</li>
-<?php elseif($isLoggedIn): ?>
+<?php if($isLoggedIn): ?>
 <li class="nav-item d-flex align-items-center me-2">
 <span class="nav-link mb-0" style="opacity:1; border-bottom:0;">
 <?= esc($accountName) ?>
@@ -552,6 +541,17 @@ Logout
 <li class="nav-item">
 <a class="nav-link <?= $isDashboard ? 'active' : '' ?>" href="/sinag-donation/public/dashboard">
 Dashboard
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/sinag-donation/public/logout">
+Logout
+</a>
+</li>
+<?php elseif($isAdminSession): ?>
+<li class="nav-item">
+<a class="btn btn-primary ms-2" href="/sinag-donation/public/admin">
+Admin Panel
 </a>
 </li>
 <li class="nav-item">

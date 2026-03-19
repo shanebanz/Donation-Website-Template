@@ -26,13 +26,17 @@ class Dashboard extends Controller
         }
 
         $donorName = (string) (session()->get('name') ?? '');
+        $anonymousMarker = '__ANON__:' . $donorName;
 
-        $summaryRows = $db->table('donations')
+        $summaryBuilder = $db->table('donations')
             ->select('status, COUNT(*) AS total', false)
-            ->where('donor_name', $donorName)
-            ->groupBy('status')
-            ->get()
-            ->getResultArray();
+            ->groupStart()
+                ->where('donor_name', $donorName)
+                ->orWhere('donor_name', $anonymousMarker)
+            ->groupEnd()
+            ->groupBy('status');
+
+        $summaryRows = $summaryBuilder->get()->getResultArray();
 
         $summary = [
             'all' => 0,
@@ -49,7 +53,11 @@ class Dashboard extends Controller
             }
         }
 
-        $totalBuilder = $db->table('donations')->where('donor_name', $donorName);
+        $totalBuilder = $db->table('donations')
+            ->groupStart()
+                ->where('donor_name', $donorName)
+                ->orWhere('donor_name', $anonymousMarker)
+            ->groupEnd();
         if ($status !== 'all') {
             $totalBuilder->where('status', $status);
         }
@@ -63,7 +71,10 @@ class Dashboard extends Controller
         $historyBuilder = $db->table('donations');
         $historyBuilder->select('donations.id, donations.campaign_id, donations.amount, donations.reference_number, donations.status, donations.created_at, campaigns.title AS campaign_title, campaigns.image AS campaign_image');
         $historyBuilder->join('campaigns', 'campaigns.id = donations.campaign_id', 'left');
-        $historyBuilder->where('donations.donor_name', $donorName);
+        $historyBuilder->groupStart()
+            ->where('donations.donor_name', $donorName)
+            ->orWhere('donations.donor_name', $anonymousMarker)
+        ->groupEnd();
         if ($status !== 'all') {
             $historyBuilder->where('donations.status', $status);
         }
