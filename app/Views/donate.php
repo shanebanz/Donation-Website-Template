@@ -4,6 +4,10 @@
 
 <?php
 $safeProgress = max(0, min(100, (int) round($progress)));
+$paymentQrImage = $paymentQrImage ?? '';
+$paymentAccountName = $paymentAccountName ?? 'SINAG Donation';
+$paymentAccountNumber = $paymentAccountNumber ?? '';
+$paymentMethods = $paymentMethods ?? ['GCash'];
 ?>
 
 <style>
@@ -105,6 +109,51 @@ padding:.7rem .8rem;
 border-radius:10px;
 }
 
+.payment-destination{
+border:1px solid #dbe5d7;
+border-radius:12px;
+padding:14px;
+background:#f8fbf6;
+margin-bottom:14px;
+}
+
+.payment-grid{
+display:grid;
+grid-template-columns:120px 1fr;
+gap:12px;
+align-items:center;
+}
+
+.payment-qr{
+width:120px;
+height:120px;
+object-fit:cover;
+border-radius:10px;
+border:1px solid #d6e0d1;
+background:#fff;
+}
+
+.payment-title{
+font-size:.86rem;
+font-weight:700;
+letter-spacing:.45px;
+text-transform:uppercase;
+color:#5f7c2f;
+margin-bottom:6px;
+}
+
+.payment-meta{
+font-size:.92rem;
+color:#435340;
+margin-bottom:2px;
+}
+
+.payment-help{
+font-size:.86rem;
+color:#627060;
+margin:8px 0 0;
+}
+
 @media (max-width: 992px){
 .donate-wrap{
 grid-template-columns:1fr;
@@ -124,6 +173,16 @@ height:190px;
 
 .mini-stats{
 grid-template-columns:1fr;
+}
+
+.payment-grid{
+grid-template-columns:1fr;
+}
+
+.payment-qr{
+width:100%;
+max-width:180px;
+height:180px;
 }
 
 .trust-list li,
@@ -181,6 +240,23 @@ font-size:.93rem;
 <h2>Donate to <?= $campaign->title ?></h2>
 <p class="form-note">Complete the form below to submit your donation proof.</p>
 
+<div class="payment-destination">
+<div class="payment-title">Where To Send Your Donation</div>
+<div class="payment-grid">
+<?php if(!empty($paymentQrImage)): ?>
+<img src="<?= esc($paymentQrImage) ?>" alt="Donation QR" class="payment-qr">
+<?php endif; ?>
+<div>
+<div class="payment-meta"><strong>Account Name:</strong> <?= esc($paymentAccountName) ?></div>
+<?php if(!empty($paymentAccountNumber)): ?>
+<div class="payment-meta"><strong>Account Number:</strong> <?= esc($paymentAccountNumber) ?></div>
+<?php endif; ?>
+<div class="payment-meta"><strong>Supported:</strong> <?= esc(implode(', ', $paymentMethods)) ?></div>
+<p class="payment-help">Scan the QR using GCash or Google Pay, send your amount, then submit the reference number and screenshot below.</p>
+</div>
+</div>
+</div>
+
 <form method="post" action="/sinag-donation/public/donate/save" enctype="multipart/form-data">
 
 <input type="hidden" name="campaign_id" value="<?= $campaign->id ?>">
@@ -197,6 +273,15 @@ font-size:.93rem;
 <div class="mb-3">
 <label class="form-label">Amount</label>
 <input type="number" name="amount" min="1" class="form-control" required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Payment Method</label>
+<select name="payment_method" class="form-control" required>
+<?php foreach($paymentMethods as $method): ?>
+<option value="<?= esc($method) ?>"><?= esc($method) ?></option>
+<?php endforeach; ?>
+</select>
 </div>
 
 <div class="mb-3">

@@ -5,6 +5,7 @@
 <?php
 $deadlineText = !empty($campaign->deadline) ? date('M d, Y', strtotime($campaign->deadline)) : 'No deadline';
 $safeProgress = max(0, min(100, (int) $progress));
+$isAdminSession = (bool) session()->get('isAdmin');
 ?>
 
 <style>
@@ -197,13 +198,19 @@ padding:8px 9px;
 </div>
 
 <div class="action-row">
+<?php if(!$isAdminSession): ?>
 <a href="/sinag-donation/public/donate/<?= $campaign->id ?>" class="btn btn-success px-4">
 Donate Now
 </a>
+<?php endif; ?>
 <button class="btn btn-outline-secondary px-4">
 Pledge to Help
 </button>
 </div>
+
+<?php if($isAdminSession): ?>
+<p class="text-muted small mt-2 mb-0">Admin accounts cannot submit donations.</p>
+<?php endif; ?>
 </div>
 
 </div>
