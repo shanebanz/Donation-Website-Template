@@ -466,6 +466,10 @@ $path = preg_replace('#^index\.php/?#', '', (string) $path);
 $path = trim((string) $path, '/');
 $isCampaigns = $path === 'campaigns' || str_starts_with($path, 'campaign/') || str_starts_with($path, 'donate/');
 $isHowItWorks = $path === 'how-it-works';
+$isDashboard = $path === 'dashboard';
+$isLoggedIn = (bool) session()->get('user_id');
+$isAdminSession = (bool) session()->get('isAdmin');
+$accountName = (string) (session()->get('name') ?? 'My Account');
 $skeletonTarget = null;
 
 if ($path === '' || $path === 'home') {
@@ -528,6 +532,34 @@ How It Works
 
 <ul class="navbar-nav">
 
+<?php if($isAdminSession): ?>
+<li class="nav-item">
+<a class="btn btn-primary ms-2" href="/sinag-donation/public/admin">
+Admin Panel
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/sinag-donation/public/logout">
+Logout
+</a>
+</li>
+<?php elseif($isLoggedIn): ?>
+<li class="nav-item d-flex align-items-center me-2">
+<span class="nav-link mb-0" style="opacity:1; border-bottom:0;">
+<?= esc($accountName) ?>
+</span>
+</li>
+<li class="nav-item">
+<a class="nav-link <?= $isDashboard ? 'active' : '' ?>" href="/sinag-donation/public/dashboard">
+Dashboard
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/sinag-donation/public/logout">
+Logout
+</a>
+</li>
+<?php else: ?>
 <li class="nav-item">
 <a class="nav-link" href="/sinag-donation/public/login">
 Login
@@ -539,6 +571,7 @@ Login
 Register
 </a>
 </li>
+<?php endif; ?>
 
 </ul>
 

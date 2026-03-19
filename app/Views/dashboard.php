@@ -3,203 +3,248 @@
 <?= $this->section('content') ?>
 
 <?php
-$campaigns   = $campaigns   ?? [];
-$currentTab  = $currentTab  ?? 'active';
+$donations = $donations ?? [];
+$summary = $summary ?? ['all' => 0, 'pending' => 0, 'approved' => 0, 'rejected' => 0];
+$currentStatus = $currentStatus ?? 'all';
 $currentPage = $currentPage ?? 1;
-$totalPages  = $totalPages  ?? 1;
-$activeCount = $activeCount ?? 0;
-$endedCount  = $endedCount  ?? 0;
+$totalPages = $totalPages ?? 1;
+
+$statusLabelMap = [
+    'all' => 'All',
+    'pending' => 'Pending',
+    'approved' => 'Approved',
+    'rejected' => 'Rejected',
+];
 ?>
 
 <style>
-.dash-wrap{
-display:grid;
-grid-template-columns:1.2fr 1fr;
-gap:18px;
-margin-bottom:28px;
-}
-
-.dash-panel,
-.dash-card{
-background:#fff;
+.user-dash-head{
+background:linear-gradient(135deg,#0f1713 0%,#1f2d25 56%,#31473a 100%);
 border-radius:16px;
 padding:24px;
+color:#f4faf5;
+margin-bottom:20px;
 box-shadow:0 12px 24px rgba(15,22,18,.1);
 }
 
-.dash-panel{
-background:linear-gradient(135deg,#0f1713 0%,#1f2d25 56%,#31473a 100%);
-color:#f4faf5;
+.user-dash-head p{
+margin:8px 0 0;
+color:#d6e6db;
 }
 
-.dash-panel p{
-color:#d3e4d8;
-max-width:560px;
+.status-cards{
+display:grid;
+grid-template-columns:repeat(4,minmax(150px,1fr));
+gap:12px;
+margin-bottom:18px;
 }
 
-.dash-list{
-margin:14px 0 0;
-padding-left:18px;
-color:#deebe1;
-}
-
-.quick-title{
-font-size:1.2rem;
-margin-bottom:14px;
-}
-
-.quick-link{
-display:block;
-border:1px solid #dde5d9;
+.status-card{
+background:#fff;
+border:1px solid #dce6d8;
 border-radius:12px;
-padding:12px 14px;
-color:#1d2a22;
-text-decoration:none;
-font-weight:600;
-margin-bottom:10px;
+padding:14px 16px;
+box-shadow:0 4px 12px rgba(15,22,18,.06);
 }
 
-.quick-link:hover{
-border-color:#9db183;
-background:#f7faf5;
-}
-
-.dash-section-title{
-font-size:1.25rem;
+.status-card-title{
+font-size:.82rem;
+text-transform:uppercase;
+letter-spacing:.55px;
+color:#5f6a63;
+margin-bottom:3px;
 font-weight:700;
-margin-bottom:16px;
-color:#1a2419;
 }
 
-.campaign-tabs{
+.status-card-value{
+font-size:1.5rem;
+font-weight:800;
+color:#1b271f;
+line-height:1;
+}
+
+.status-tabs{
 background:#f7faf5;
 padding:8px;
 border-radius:12px;
 border:1px solid #dce6d8;
+margin-bottom:16px;
 }
 
-.campaign-tabs .nav-link{
+.status-tabs .nav-link{
 border:none;
 border-radius:9px;
 font-weight:600;
-padding:.55rem .95rem;
+padding:.5rem .9rem;
 color:#495057;
 }
 
-.campaign-tabs .nav-link.active{
+.status-tabs .nav-link.active{
 background:#5f7c2f;
 color:#fff !important;
 }
 
+.history-wrap{
+background:#fff;
+border-radius:14px;
+border:1px solid #dde6da;
+box-shadow:0 8px 20px rgba(15,22,18,.08);
+overflow:hidden;
+}
+
+.history-head{
+padding:14px 16px;
+border-bottom:1px solid #e8eee6;
+font-weight:700;
+color:#1b271f;
+}
+
+.history-table{
+margin:0;
+}
+
+.history-table th{
+font-size:.84rem;
+text-transform:uppercase;
+letter-spacing:.45px;
+color:#5f6a63;
+background:#f9fbf8;
+}
+
+.status-pill{
+font-weight:700;
+border-radius:999px;
+padding:.34rem .6rem;
+font-size:.75rem;
+text-transform:uppercase;
+letter-spacing:.35px;
+}
+
+.status-pending{background:#fff4db;color:#8a6510;}
+.status-approved{background:#e6f7ea;color:#1e7e34;}
+.status-rejected{background:#fde7e8;color:#b02a37;}
+
 @media (max-width: 992px){
-.dash-wrap{
+.status-cards{
+grid-template-columns:repeat(2,minmax(140px,1fr));
+}
+}
+
+@media (max-width: 576px){
+.status-cards{
 grid-template-columns:1fr;
+}
+
+.history-wrap{
+border-radius:12px;
+}
+
+.history-head{
+font-size:.92rem;
 }
 }
 </style>
 
-<section class="dash-wrap">
-<div class="dash-panel">
-<h2 class="mb-2">Welcome to SINAG Donation</h2>
-<p>You are logged in. Explore campaigns, submit donations, and monitor transparent progress updates.</p>
-
-<ul class="dash-list">
-<li>Discover active campaigns</li>
-<li>Track approved donation progress</li>
-<li>Support causes with verified updates</li>
-</ul>
-</div>
-
-<aside class="dash-card">
-<h3 class="quick-title">Quick Actions</h3>
-<a class="quick-link" href="/sinag-donation/public/campaigns">Browse All Campaigns</a>
-<a class="quick-link" href="/sinag-donation/public/how-it-works">Read How It Works</a>
-<a class="quick-link" href="/sinag-donation/public/admin">Go to Admin Panel</a>
-</aside>
+<section class="user-dash-head">
+<h2 class="mb-0">My Donation Dashboard</h2>
+<p>Track your donation statuses and review your complete campaign contribution history.</p>
 </section>
 
-<div class="mb-2">
-<span class="dash-section-title">Campaigns</span>
+<section class="status-cards">
+<div class="status-card">
+<div class="status-card-title">Total Donations</div>
+<div class="status-card-value"><?= (int) ($summary['all'] ?? 0) ?></div>
 </div>
+<div class="status-card">
+<div class="status-card-title">Pending</div>
+<div class="status-card-value"><?= (int) ($summary['pending'] ?? 0) ?></div>
+</div>
+<div class="status-card">
+<div class="status-card-title">Approved</div>
+<div class="status-card-value"><?= (int) ($summary['approved'] ?? 0) ?></div>
+</div>
+<div class="status-card">
+<div class="status-card-title">Rejected</div>
+<div class="status-card-value"><?= (int) ($summary['rejected'] ?? 0) ?></div>
+</div>
+</section>
 
-<ul class="nav nav-tabs mb-4 campaign-tabs">
-<li class="nav-item">
-<a class="nav-link <?= $currentTab === 'active' ? 'active' : '' ?>"
-   href="/sinag-donation/public/dashboard?tab=active">
-Active
-<?php if($activeCount > 0): ?>
-<span class="badge <?= $currentTab === 'active' ? 'bg-white text-success' : 'bg-success' ?> ms-1"><?= $activeCount ?></span>
+<ul class="nav nav-tabs status-tabs" role="tablist">
+<?php foreach ($statusLabelMap as $key => $label): ?>
+<li class="nav-item" role="presentation">
+<a class="nav-link <?= $currentStatus === $key ? 'active' : '' ?>" href="/sinag-donation/public/dashboard?status=<?= $key ?>">
+<?= $label ?>
+<?php if (($summary[$key] ?? 0) > 0): ?>
+<span class="badge <?= $currentStatus === $key ? 'bg-white text-success' : 'bg-success' ?> ms-1"><?= (int) $summary[$key] ?></span>
 <?php endif; ?>
 </a>
 </li>
-<li class="nav-item">
-<a class="nav-link <?= $currentTab === 'ended' ? 'active' : '' ?>"
-   href="/sinag-donation/public/dashboard?tab=ended">
-Ended
-<?php if($endedCount > 0): ?>
-<span class="badge <?= $currentTab === 'ended' ? 'bg-white text-secondary' : 'bg-secondary' ?> ms-1"><?= $endedCount ?></span>
-<?php endif; ?>
-</a>
-</li>
+<?php endforeach; ?>
 </ul>
 
-<div class="row">
-<?php if(empty($campaigns)): ?>
-<div class="col-12">
-<div class="alert alert-light border">
-<?= $currentTab === 'ended' ? 'No ended campaigns yet.' : 'No active campaigns at the moment.' ?>
-</div>
-</div>
-<?php endif; ?>
+<div class="history-wrap">
+<div class="history-head">Donation History (<?= esc($statusLabelMap[$currentStatus] ?? 'All') ?>)</div>
 
-<?php foreach($campaigns as $c): ?>
-<div class="col-md-6 col-lg-4 mb-4 d-flex">
-<div class="card shadow w-100">
-
-<?php if(!empty($c->image)): ?>
-<img src="/sinag-donation/public/uploads/<?= $c->image ?>" class="card-img-top" alt="<?= esc($c->title) ?>">
-<?php else: ?>
-<div style="height:200px;background:linear-gradient(135deg,#dbe5d7,#cfdac9);border-top-left-radius:14px;border-top-right-radius:14px;"></div>
-<?php endif; ?>
-
-<div class="card-body d-flex flex-column">
-<?php if($currentTab === 'ended'): ?>
-<div class="d-flex justify-content-between align-items-center mb-2">
-<h5 class="card-title mb-0"><?= esc($c->title) ?></h5>
-<span class="badge bg-secondary">Ended</span>
+<?php if (empty($donations)): ?>
+<div class="p-3">
+<div class="alert alert-light border mb-0">No donations found for this status.</div>
 </div>
 <?php else: ?>
-<h5 class="card-title"><?= esc($c->title) ?></h5>
+<div class="table-responsive">
+<table class="table history-table align-middle mb-0">
+<thead>
+<tr>
+<th>Campaign</th>
+<th>Amount</th>
+<th>Reference</th>
+<th>Status</th>
+<th>Date</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<?php foreach ($donations as $d): ?>
+<tr>
+<td><?= esc($d->campaign_title ?? 'Deleted Campaign') ?></td>
+<td>PHP <?= number_format((float) ($d->amount ?? 0), 2) ?></td>
+<td><?= esc($d->reference_number ?: '-') ?></td>
+<td>
+<?php $status = strtolower((string) ($d->status ?? 'pending')); ?>
+<span class="status-pill status-<?= esc($status) ?>"><?= esc(ucfirst($status)) ?></span>
+</td>
+<td>
+<?php if (! empty($d->created_at)): ?>
+<?= esc(date('M d, Y h:i A', strtotime((string) $d->created_at))) ?>
+<?php else: ?>
+-
 <?php endif; ?>
-
-<p class="card-text text-muted" style="-webkit-line-clamp:3;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;min-height:4.2rem;"><?= esc($c->description) ?></p>
-<p class="small mb-1"><strong>Goal:</strong> ₱<?= number_format($c->goal_amount) ?></p>
-<?php if(!empty($c->deadline)): ?>
-<p class="small mb-3"><strong>Deadline:</strong> <?= date('M d, Y', strtotime($c->deadline)) ?></p>
+</td>
+<td>
+<?php if (! empty($d->campaign_id)): ?>
+<a href="/sinag-donation/public/campaign/<?= (int) $d->campaign_id ?>" class="btn btn-sm btn-outline-secondary">View Campaign</a>
 <?php endif; ?>
-<a href="/sinag-donation/public/campaign/<?= $c->id ?>" class="btn <?= $currentTab === 'ended' ? 'btn-outline-secondary' : 'btn-primary' ?> mt-auto">
-<?= $currentTab === 'ended' ? 'View Details' : 'View Campaign' ?>
-</a>
-</div>
-
-</div>
-</div>
+</td>
+</tr>
 <?php endforeach; ?>
+</tbody>
+</table>
+</div>
+<?php endif; ?>
 </div>
 
-<?php if($totalPages > 1): ?>
-<nav aria-label="Dashboard campaign pages" class="mt-2 mb-4">
+<?php if ($totalPages > 1): ?>
+<nav aria-label="Donation pages" class="mt-3 mb-2">
 <ul class="pagination justify-content-center">
 <li class="page-item <?= $currentPage <= 1 ? 'disabled' : '' ?>">
-<a class="page-link" href="/sinag-donation/public/dashboard?tab=<?= $currentTab ?>&page=<?= $currentPage - 1 ?>">&#8592; Prev</a>
+<a class="page-link" href="/sinag-donation/public/dashboard?status=<?= esc($currentStatus) ?>&page=<?= $currentPage - 1 ?>">Prev</a>
 </li>
 <?php for($p = 1; $p <= $totalPages; $p++): ?>
 <li class="page-item <?= $p === $currentPage ? 'active' : '' ?>">
-<a class="page-link" href="/sinag-donation/public/dashboard?tab=<?= $currentTab ?>&page=<?= $p ?>"><?= $p ?></a>
+<a class="page-link" href="/sinag-donation/public/dashboard?status=<?= esc($currentStatus) ?>&page=<?= $p ?>"><?= $p ?></a>
 </li>
 <?php endfor; ?>
 <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
-<a class="page-link" href="/sinag-donation/public/dashboard?tab=<?= $currentTab ?>&page=<?= $currentPage + 1 ?>">Next &#8594;</a>
+<a class="page-link" href="/sinag-donation/public/dashboard?status=<?= esc($currentStatus) ?>&page=<?= $currentPage + 1 ?>">Next</a>
 </li>
 </ul>
 </nav>

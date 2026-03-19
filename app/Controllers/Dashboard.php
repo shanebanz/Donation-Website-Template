@@ -8,44 +8,76 @@ class Dashboard extends Controller
 {
     public function index()
     {
-        $db      = \Config\Database::connect();
-        $perPage = 6;
-        $page    = (int) ($this->request->getGet('page') ?? 1);
-        if ($page < 1) $page = 1;
+        if (! session()->get('user_id')) {
+            return redirect()->to(base_url('login'))->with('error', 'Please login to view your dashboard.');
+        }
 
-        $today = date('Y-m-d');
-        $tab   = $this->request->getGet('tab') === 'ended' ? 'ended' : 'active';
+        $db = \Config\Database::connect();
+        $perPage = 10;
+        $page = (int) ($this->request->getGet('page') ?? 1);
+        if ($page < 1) {
+            $page = 1;
+        }
 
-        $all = $db->table('campaigns')->orderBy('id', 'DESC')->get()->getResult();
+        $allowedStatus = ['all', 'pending', 'approved', 'rejected'];
+        $status = strtolower((string) ($this->request->getGet('status') ?? 'all'));
+        if (! in_array($status, $allowedStatus, true)) {
+            $status = 'all';
+        }
 
-        $allActive = [];
-        $allEnded  = [];
+        $donorName = (string) (session()->get('name') ?? '');
 
-        foreach ($all as $c) {
-            $deadline  = !empty($c->deadline) ? date('Y-m-d', strtotime((string) $c->deadline)) : null;
-            $isDone    = (float)($c->goal_amount ?? 0) > 0 && (float)($c->current_amount ?? 0) >= (float)($c->goal_amount ?? 0);
-            $isExpired = !empty($deadline) && $deadline < $today;
+        $summaryRows = $db->table('donations')
+            ->select('status, COUNT(*) AS total', false)
+            ->where('donor_name', $donorName)
+            ->groupBy('status')
+            ->get()
+            ->getResultArray();
 
-            if ($isDone || $isExpired) {
-                $allEnded[] = $c;
-            } else {
-                $allActive[] = $c;
+        $summary = [
+            'all' => 0,
+            'pending' => 0,
+            'approved' => 0,
+            'rejected' => 0,
+        ];
+
+        foreach ($summaryRows as $row) {
+            $key = strtolower((string) ($row['status'] ?? ''));
+            if (isset($summary[$key])) {
+                $summary[$key] = (int) ($row['total'] ?? 0);
+                $summary['all'] += (int) ($row['total'] ?? 0);
             }
         }
 
-        $sourceList = $tab === 'ended' ? $allEnded : $allActive;
-        $totalItems = count($sourceList);
+        $totalBuilder = $db->table('donations')->where('donor_name', $donorName);
+        if ($status !== 'all') {
+            $totalBuilder->where('status', $status);
+        }
+        $totalItems = $totalBuilder->countAllResults();
+
         $totalPages = max(1, (int) ceil($totalItems / $perPage));
-        if ($page > $totalPages) $page = $totalPages;
-        $paged = array_slice($sourceList, ($page - 1) * $perPage, $perPage);
+        if ($page > $totalPages) {
+            $page = $totalPages;
+        }
+
+        $historyBuilder = $db->table('donations');
+        $historyBuilder->select('donations.id, donations.campaign_id, donations.amount, donations.reference_number, donations.status, donations.created_at, campaigns.title AS campaign_title, campaigns.image AS campaign_image');
+        $historyBuilder->join('campaigns', 'campaigns.id = donations.campaign_id', 'left');
+        $historyBuilder->where('donations.donor_name', $donorName);
+        if ($status !== 'all') {
+            $historyBuilder->where('donations.status', $status);
+        }
+        $historyBuilder->orderBy('donations.id', 'DESC');
+        $historyBuilder->limit($perPage, ($page - 1) * $perPage);
+
+        $donations = $historyBuilder->get()->getResult();
 
         return view('dashboard', [
-            'campaigns'   => $paged,
-            'currentTab'  => $tab,
+            'donations' => $donations,
+            'summary' => $summary,
+            'currentStatus' => $status,
             'currentPage' => $page,
-            'totalPages'  => $totalPages,
-            'activeCount' => count($allActive),
-            'endedCount'  => count($allEnded),
+            'totalPages' => $totalPages,
         ]);
     }
 }
