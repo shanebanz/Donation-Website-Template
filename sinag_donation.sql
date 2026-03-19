@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2026 at 01:20 PM
+-- Generation Time: Mar 19, 2026 at 07:04 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,12 +44,13 @@ CREATE TABLE `campaigns` (
 
 INSERT INTO `campaigns` (`id`, `title`, `description`, `goal_amount`, `current_amount`, `deadline`, `created_at`, `image`) VALUES
 (3, 'Food for the Children in Need', 'These children are hungry and are in need of immediate help.', 20000.00, 300.00, NULL, '2026-03-12 16:11:36', '1773331896_4c7203095b875dc17758.png'),
-(4, 'Solar Lamps for Sitio Pag-asa', 'Help us install durable solar lamps for 120 households in Sitio Pag-asa so students can study at night and families can stay safe during power interruptions.', 85000.00, 14500.00, '2026-04-29', '2026-03-15 10:55:07', 'ai-solar-lamps-sitio-pagasa.svg'),
-(5, 'School Supplies for Barangay Malaya', 'Provide notebooks, pencils, and hygiene kits for 60 students in Barangay Malaya before the next school quarter starts.', 1800.00, 350.00, '2026-04-04', '2026-03-15 11:00:48', 'ai-school-supplies-malaya.svg'),
-(6, 'Medicines for Lola Rosa', 'Support a one-month maintenance medicine pack for Lola Rosa, a senior citizen managing hypertension and diabetes.', 1200.00, 900.00, '2026-03-27', '2026-03-15 11:00:48', 'ai-medicines-lola-rosa.svg'),
-(7, 'Rice Packs for 20 Families', 'Fund rice and canned goods for 20 families affected by recent flooding in low-lying areas.', 2000.00, 2000.00, '2026-03-20', '2026-03-15 11:00:48', 'ai-rice-packs-families.svg'),
-(8, 'Community First Aid Refill', 'Restock first aid essentials including bandages, antiseptics, and basic emergency medicines for barangay responders.', 1500.00, 250.00, '2026-03-29', '2026-03-15 11:00:48', 'ai-community-first-aid.svg'),
-(9, 'Typhoon Shelter Repair Fund', 'Repair damaged roofing panels and walling in an evacuation center used by families during storms.', 25000.00, 8000.00, '2026-03-05', '2026-03-15 11:00:48', 'ai-typhoon-shelter-repair.svg');
+(4, 'Solar Lamps for Sitio Pag-asa', 'Help us install durable solar lamps for 120 households in Sitio Pag-asa so students can study at night and families can stay safe during power interruptions.', 85000.00, 14500.00, '2026-05-03', '2026-03-15 10:55:07', 'ai-solar-lamps-sitio-pagasa.svg'),
+(5, 'School Supplies for Barangay Malaya', 'Provide notebooks, pencils, and hygiene kits for 60 students in Barangay Malaya before the next school quarter starts.', 1800.00, 350.00, '2026-04-08', '2026-03-15 11:00:48', 'ai-school-supplies-malaya.svg'),
+(6, 'Medicines for Lola Rosa', 'Support a one-month maintenance medicine pack for Lola Rosa, a senior citizen managing hypertension and diabetes.', 1200.00, 900.00, '2026-03-31', '2026-03-15 11:00:48', 'ai-medicines-lola-rosa.svg'),
+(7, 'Rice Packs for 20 Families', 'Fund rice and canned goods for 20 families affected by recent flooding in low-lying areas.', 2000.00, 2000.00, '2026-03-24', '2026-03-15 11:00:48', 'ai-rice-packs-families.svg'),
+(8, 'Community First Aid Refill', 'Restock first aid essentials including bandages, antiseptics, and basic emergency medicines for barangay responders.', 1500.00, 250.00, '2026-04-02', '2026-03-15 11:00:48', 'ai-community-first-aid.svg'),
+(9, 'Typhoon Shelter Repair Fund', 'Repair damaged roofing panels and walling in an evacuation center used by families during storms.', 25000.00, 8000.00, '2026-03-09', '2026-03-15 11:00:48', 'ai-typhoon-shelter-repair.svg'),
+(10, 'Meals for Children in Cebu', 'Children in Cebu are in need of help after a disaster struck Cebu\'s part.', 10000.00, 100.00, '2026-03-31', '2026-03-19 04:50:31', '1773895840_9d6dd6ec154bc691fa51.png');
 
 -- --------------------------------------------------------
 
@@ -76,7 +77,10 @@ CREATE TABLE `donations` (
 INSERT INTO `donations` (`id`, `campaign_id`, `donor_name`, `amount`, `payment_method`, `reference_number`, `status`, `created_at`, `proof`) VALUES
 (1, 1, 'Norwood', 99999999.99, 'GCash', '234234', 'pending', '2026-03-10 09:52:36', NULL),
 (2, 1, 'Test Donor', 500.00, 'GCash', '123ABC', 'approved', '2026-03-11 14:25:01', NULL),
-(3, 3, 'Test Donor 2', 300.00, 'GCash', '2342343', 'approved', '2026-03-12 16:22:47', '1773332567_fcd51ce196e6d8151e6e.png');
+(3, 3, 'Test Donor 2', 300.00, 'GCash', '2342343', 'approved', '2026-03-12 16:22:47', '1773332567_fcd51ce196e6d8151e6e.png'),
+(4, 6, 'Croowie', 50.00, 'GCash', '1238918611', 'pending', '2026-03-19 04:47:56', '1773895676_93ac95efd80f5453ab5f.jpg'),
+(5, 10, 'Scooby Doo', 50.00, 'GCash', '5634912312', 'approved', '2026-03-19 05:23:25', '1773897805_27b5e30702b35e6d71b0.jpg'),
+(6, 10, '__ANON__:Scooby Doo', 50.00, 'GCash', '723458123', 'approved', '2026-03-19 05:34:41', '1773898481_4d87d15a9c633fcbda63.jpg');
 
 -- --------------------------------------------------------
 
@@ -102,8 +106,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `verification_token`, `is_verified`, `is_active`) VALUES
 (1, 'Admin', 'admin@sinag.com', '123456', 'admin', '2026-03-10 09:12:43', NULL, 0, 1),
-(2, 'donator1', 'fafasa1059@hlkes.com', '$2y$10$.KUXlKDbUpKnv1SUpGUPw.6Y47cxGC371X1hzahu2XYA6PsGY4Y5C', '', '2026-03-15 10:29:09', NULL, 1, 1),
-(4, 'Melman Dela Cruz', 'vebypimu@forexzig.com', '$2y$10$YVGTQNFmWtp2qDhzbzBf4upnglAZuJUiyznoKcLTLeGT1G.nZ6Gzq', '', '2026-03-15 11:42:16', NULL, 1, 1);
+(2, 'donator1', 'fafasa1059@hlkes.com', '$2y$10$.KUXlKDbUpKnv1SUpGUPw.6Y47cxGC371X1hzahu2XYA6PsGY4Y5C', '', '2026-03-15 10:29:09', NULL, 1, 0),
+(4, 'Melman Dela Cruz', 'vebypimu@forexzig.com', '$2y$10$YVGTQNFmWtp2qDhzbzBf4upnglAZuJUiyznoKcLTLeGT1G.nZ6Gzq', '', '2026-03-15 11:42:16', NULL, 1, 1),
+(5, 'Croowie', 'lastesistu@necub.com', '$2y$10$O0ixPD/jWoKgShpNJukmPOoZtEAc29t9E/vp26o5aGlds8XgbqAJm', '', '2026-03-19 03:50:39', NULL, 1, 1),
+(6, 'Scooby Doo', 'cofyemurdi@necub.com', '$2y$10$cTpFOGLZ6kIoEvdRaNkwA.uoabAc2kMjbWmy73DD3pApzycwKyPO.', '', '2026-03-19 05:20:50', NULL, 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -136,19 +142,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `campaigns`
 --
 ALTER TABLE `campaigns`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
